@@ -1,5 +1,7 @@
 pragma solidity ^0.4.0;
 
+
+// ERC20 is looking at token distribution and delegation
 interface ERC20 {
     // returns the amount of tokens in circulation
     function totalSupply() external constant returns (uint _totalSupply);
