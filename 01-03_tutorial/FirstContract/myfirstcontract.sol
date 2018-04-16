@@ -66,19 +66,25 @@ contract MyFirstContract is Bank(10) {
 
 
 contract TestThrows {
-    function testAssert() {
+
+    //Assert: validating functional imports at runtime, gas is consumed
+    //Require: parameter requirement (owner), gas is consumed, but will be changed to revert
+    //Revert: gas is returned
+    //Throw: gas is completely consumed but will be deprecated
+
+    function testAssert() pure public {
         assert(1 == 2);
     }
     
-    function testRequire() {
+    function testRequire() pure public {
         require(2 == 1);
     }
     
-    function testRevert() {
+    function testRevert() pure public {
         revert();
     }
     
-    function testThrow() {
+    function testThrow() pure public {
         throw;
     }
 }
