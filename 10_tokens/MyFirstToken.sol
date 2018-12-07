@@ -31,7 +31,7 @@ contract MyFirstToken is Token("MFT", "My First Token", 18, 1000), ERC20, ERC223
         return false;
     }
 
-    function transfer(address _to, uint _value, bytes memory _data) public returns (bool) {
+    function transfer(address _to, uint _value, bytes calldata _data) external returns (bool) {
         if (_value > 0 && 
             _value <= _balanceOf[msg.sender] &&
             isContract(_to)) {
