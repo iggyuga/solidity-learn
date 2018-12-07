@@ -1,4 +1,4 @@
-pragma solidity ^0.4.17;
+pragma solidity ^0.5.0;
 
 // This file is used to understand the solidity datatypes
 contract DataTypes {
@@ -16,9 +16,9 @@ contract DataTypes {
     uint8[] myStringArr;
     
     // string[] is a nested array of integers and cannot be used currently
-    function myFunc(string s) {
+    // function myFunc(string memory s) public {
         
-    }
+    // }
     
     
     // byte is just an alias to bytes1, range 1-32 doesn't have
@@ -45,16 +45,16 @@ contract DataTypes {
     
     //we only need to create a payable function if want the Value of the address
     // sender is the person interacting with the contract
-    function assignAddress() {
+    function assignAddress() public {
         myAddress = msg.sender;
         myAddress.balance;
-        myAddress.transfer(10);
+        ////myAddress.transfer(10);
     }
     
     //Arrays
     uint[] myIntArr = [1,2,3];
     
-    function arrFunc() {
+    function arrFunc() public {
         myIntArr.push(1); //adds to array (non-fixed)
         myIntArr.length; // gets length
         myIntArr[0]; // access value
@@ -71,18 +71,18 @@ contract DataTypes {
     //instance of Account
     Account myAccount;
     
-    function structFunc() {
+    function structFunc() public {
         myAccount.balance = 100;
     }
     
     //map
     mapping (address => Account) _accounts;
     
-    function () payable {
+    function () external payable {
         _accounts[msg.sender].balance += msg.value;
     }
     
-    function getBalance() returns (uint) {
+    function getBalance() public view returns (uint) {
         return _accounts[msg.sender].balance;
     }
     

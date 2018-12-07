@@ -1,4 +1,4 @@
-pragma solidity ^0.4.0;
+pragma solidity ^0.5.0;
 
 import "./Token.sol";
 import "./ERC20.sol";
@@ -7,15 +7,15 @@ import "./ERC223ReceivingContract.sol";
 
 contract MyFirstToken is Token("MFT", "My First Token", 18, 1000), ERC20, ERC223 {
 
-    function MyFirstToken() public {
+    constructor() public {
         _balanceOf[msg.sender] = _totalSupply;
     }
     
-    function totalSupply() public constant returns (uint) {
+    function totalSupply() public view returns (uint) {
         return _totalSupply;
     }
     
-    function balanceOf(address _addr) public constant returns (uint) {
+    function balanceOf(address _addr) public view returns (uint) {
         return _balanceOf[_addr];
     }
 
@@ -25,13 +25,13 @@ contract MyFirstToken is Token("MFT", "My First Token", 18, 1000), ERC20, ERC223
             !isContract(_to)) {
             _balanceOf[msg.sender] -= _value;
             _balanceOf[_to] += _value;
-            Transfer(msg.sender, _to, _value);
+            emit Transfer(msg.sender, _to, _value);
             return true;
         }
         return false;
     }
 
-    function transfer(address _to, uint _value, bytes _data) public returns (bool) {
+    function transfer(address _to, uint _value, bytes memory _data) public returns (bool) {
         if (_value > 0 && 
             _value <= _balanceOf[msg.sender] &&
             isContract(_to)) {
@@ -39,7 +39,7 @@ contract MyFirstToken is Token("MFT", "My First Token", 18, 1000), ERC20, ERC223
             _balanceOf[_to] += _value;
             ERC223ReceivingContract _contract = ERC223ReceivingContract(_to);
             _contract.tokenFallback(msg.sender, _value, _data);
-            Transfer(msg.sender, _to, _value, _data);
+            emit Transfer(msg.sender, _to, _value, _data);
             return true;
         }
         return false;
@@ -58,7 +58,7 @@ contract MyFirstToken is Token("MFT", "My First Token", 18, 1000), ERC20, ERC223
             _balanceOf[_from] -= _value;
             _balanceOf[_to] += _value;
             _allowances[_from][msg.sender] -= _value;
-            Transfer(_from, _to, _value);
+            emit Transfer(_from, _to, _value);
             return true;
         }
         return false;
@@ -66,11 +66,11 @@ contract MyFirstToken is Token("MFT", "My First Token", 18, 1000), ERC20, ERC223
     
     function approve(address _spender, uint _value) public returns (bool) {
         _allowances[msg.sender][_spender] = _value;
-        Approval(msg.sender, _spender, _value);
+        emit Approval(msg.sender, _spender, _value);
         return true;
     }
     
-    function allowance(address _owner, address _spender) public constant returns (uint) {
+    function allowance(address _owner, address _spender) public view returns (uint) {
         return _allowances[_owner][_spender];
     }
 }

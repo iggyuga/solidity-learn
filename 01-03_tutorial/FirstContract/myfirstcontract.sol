@@ -1,4 +1,4 @@
-pragma solidity ^0.4.17;
+pragma solidity ^0.5.0;
 
 interface Regulator {
     function loan() external returns (bool);
@@ -11,20 +11,20 @@ contract Bank is Regulator {
 
     // _; represents function that is being executed but we want to enforce the modifer 1st
     modifier ownerFunc {
-        require(owner == msg.sender);
+        require(owner == msg.sender, "Sender not authorized");
         _;
     }
     
-    function Bank(uint amount) public {
+    constructor (uint amount) public {
         value = amount;
         owner = msg.sender;
     }
     
-    function deposit(uint amount) ownerFunc public {
+    function deposit(uint amount) public ownerFunc  {
         value += amount;
     }
     
-    function withdraw(uint amount) ownerFunc public {
+    function withdraw(uint amount) public ownerFunc {
         if (this.checkValue(amount)) {
             value -= amount;
         }
@@ -34,7 +34,7 @@ contract Bank is Regulator {
         return value >= amount;
     }
     
-    function balance() view public returns (uint) {
+    function balance() public view returns (uint) {
         return value;
     }
     
@@ -43,15 +43,15 @@ contract Bank is Regulator {
     }
 }
 
-contract MyFirstContract is Bank(10) {
+contract MyFirstContract is Bank {
     string private name;
     uint8 private age;
     
-    function setName(string _name) public {
+    function setName(string memory _name) public {
         name = _name;
     }
     
-    function getName() view public returns (string) {
+    function getName() public view returns (string memory) {
         return name;
     }
     
@@ -59,7 +59,7 @@ contract MyFirstContract is Bank(10) {
         age = _age;
     }
     
-    function getAge() view public returns (uint8) {
+    function getAge() public view returns (uint8) {
         return age;
     }
 }
@@ -85,6 +85,7 @@ contract TestThrows {
     }
     
     function testThrow() pure public {
-        throw;
+        //throw;
+        revert();
     }
 }

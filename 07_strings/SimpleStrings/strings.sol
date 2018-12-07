@@ -1,4 +1,4 @@
-pragma solidity ^0.4.17;
+pragma solidity ^0.5.0;
 
 library Strings {
     
@@ -6,7 +6,7 @@ library Strings {
     // storage: passing a value that you don't want to be cloned
     // memory: relative to the execution
     // stack: anything within a function/encapsulating
-    function concat(string _base, string _value) pure internal returns (string) {
+    function concat(string memory _base, string memory _value) pure internal returns (string memory) {
         bytes memory _baseBytes = bytes(_base);
         bytes memory _valueBytes = bytes(_value);
         
@@ -29,7 +29,7 @@ library Strings {
     }
     
     //returns negative incase not found
-    function strpos(string _base, string _value) pure internal returns (int) {
+    function strpos(string memory _base, string memory _value) pure internal returns (int) {
         bytes memory _baseBytes = bytes(_base);
         bytes memory _valueBytes = bytes(_value);
         

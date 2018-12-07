@@ -1,13 +1,13 @@
-pragma solidity ^0.4.0;
+pragma solidity ^0.5.0;
 
 
 // ERC20 is looking at token distribution and delegation
 interface ERC20 {
     // returns the amount of tokens in circulation
-    function totalSupply() external constant returns (uint _totalSupply);
+    function totalSupply() external view returns (uint _totalSupply);
     
     // returns the token balance of a specific address
-    function balanceOf(address _owner) external constant returns (uint balance);
+    function balanceOf(address _owner) external view returns (uint balance);
     
     // allows the transfer of tokens to someone else
     function transfer(address _to, uint _value) external returns (bool success);
@@ -19,7 +19,7 @@ interface ERC20 {
     function approve(address _spender, uint _value) external returns (bool success);
     
     // how much a specific eth address can manipulate another eth address
-    function allowance(address _owner, address _spender) external constant returns (uint remaining);
+    function allowance(address _owner, address _spender) external view returns (uint remaining);
     
     //Events
     //logging Transfers

@@ -1,4 +1,4 @@
-pragma solidity ^0.4.0;
+pragma solidity ^0.5.0;
 
 // import "browser/ERC20.sol";
 import "./ERC20.sol";
@@ -12,17 +12,17 @@ contract MyFirstToken is ERC20 {
     mapping (address => uint) private __balanceOf;
     mapping (address => mapping (address => uint)) private __allowances;
     
-    function MyFirstToken() public {
+    constructor() public {
         __balanceOf[msg.sender] = __totalSupply;
     }
     
     // gets the total supply of tokens, should not change so constant 
-    function totalSupply() external constant returns (uint _totalSupply) {
+    function totalSupply() external view returns (uint _totalSupply) {
         _totalSupply = __totalSupply;
     }
     
     // gets the balance of passed in address
-    function balanceOf(address _addr) external constant returns (uint balance) {
+    function balanceOf(address _addr) external view returns (uint balance) {
         return __balanceOf[_addr];
     }
     
@@ -63,7 +63,7 @@ contract MyFirstToken is ERC20 {
     }
     
     // gives access to a spender on behalf of "another" owner
-    function allowance(address _owner, address _spender) external constant returns (uint remaining) {
+    function allowance(address _owner, address _spender) external view returns (uint remaining) {
         return __allowances[_owner][_spender];
     }
 }
